@@ -1,0 +1,285 @@
+{
+	"info": {
+		"_postman_id": "0e4ee8ed-50eb-48a2-8aea-ed1ec31ff53a",
+		"name": "Postman Library API V2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31360575",
+		"_collection_link": "https://www.postman.com/interstellar-sunset-730826/workspace/postman-api-fundamentals-student-expert/collection/31360575-0e4ee8ed-50eb-48a2-8aea-ed1ec31ff53a?action=share&source=collection_link&creator=31360575"
+	},
+	"item": [
+		{
+			"name": "Get Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"yearPublished should be a number\", function () {\r",
+							"    pm.response.json().forEach(function (book) {\r",
+							"        pm.expect(book.yearPublished).to.be.a('number');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"createdAt should be a valid date\", function () {\r",
+							"    pm.response.json().forEach(function (book) {\r",
+							"        pm.expect(new Date(book.createdAt)).to.be.a('Date');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Test to check if the response contains objects with specific properties\r",
+							"pm.test(\"Each object should have required properties\", function () {\r",
+							"    pm.response.json().forEach(function (book) {\r",
+							"        pm.expect(book).to.have.property('id');\r",
+							"        pm.expect(book).to.have.property('title');\r",
+							"        pm.expect(book).to.have.property('author');\r",
+							"        pm.expect(book).to.have.property('genre');\r",
+							"        pm.expect(book).to.have.property('yearPublished');\r",
+							"        pm.expect(book).to.have.property('checkedOut');\r",
+							"        pm.expect(book).to.have.property('isPermanentCollection');\r",
+							"        pm.expect(book).to.have.property('createdAt');\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/books/",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"books",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Fiction Books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://library-api.postmanlabs.com/books?genre=fiction&Checkedout=False",
+					"protocol": "https",
+					"host": [
+						"library-api",
+						"postmanlabs",
+						"com"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "genre",
+							"value": "fiction"
+						},
+						{
+							"key": "Checkedout",
+							"value": "False"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBookBy Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://library-api.postmanlabs.com/books/?id",
+					"protocol": "https",
+					"host": [
+						"library-api",
+						"postmanlabs",
+						"com"
+					],
+					"path": [
+						"books",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Book",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Oge\",\r\n  \"author\": \"Cheekah\",\r\n  \"genre\": \"fiction\",\r\n  \"yearPublished\": 2024\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/books",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Another Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(pm.response.json())\r",
+							"pm.collectionVariables.set(\"id\", id)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Ife\",\r\n  \"author\": \"Cheekah\",\r\n  \"genre\": \"fiction\",\r\n  \"yearPublished\": 2024\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/books",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request a boook",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"checkedOut\": true \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/books",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/books/:id",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"books",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{BaseUrl}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "postmanrulz",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://library-api.postmanlabs.com"
+		}
+	]
+}
